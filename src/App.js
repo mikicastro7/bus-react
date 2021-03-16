@@ -1,8 +1,10 @@
+import NumeroParada from "./Components/NumeroParada";
+
 function App() {
   return (
     <div className="contenedor">
       <header className="cabecera">
-        <h1>Parada nº 15</h1>
+        <NumeroParada />
         <div className="display">
           <div className="bus">
             <span className="linea">V16</span>
