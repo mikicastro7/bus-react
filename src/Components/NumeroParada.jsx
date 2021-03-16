@@ -1,8 +1,9 @@
 import React from "react";
 
-export const NumeroParada = () => {
+export const NumeroParada = (props) => {
+  const { parada, existeParada } = props;
   return (
-    <h1>Parada nº 15</h1>
+    existeParada ? <h1>Parada nº {parada}</h1> : <h1>La parada {parada} no existe</h1>
   );
 };
 

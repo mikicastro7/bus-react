@@ -1,10 +1,26 @@
+import { useEffect, useState } from "react";
+import useFetch from "./hooks/useFetch";
 import NumeroParada from "./Components/NumeroParada";
 
 function App() {
+  const [parada, setParada] = useState(27775);
+  const [existeParada, setexisteParada] = useState(false);
+  const { datos, cargando } = useFetch(`https://api.tmb.cat/v1/transit/parades/${parada}?app_id=a372a6d9&app_key=de3506372e19c90a75a39c1fa2dc9fb7`);
+
+  useEffect(() => {
+    if(!cargando){
+      if(datos.numberReturned > 0){
+        setexisteParada(true);
+      } else {
+        setexisteParada(false);
+      }
+    }
+  },[datos, parada, cargando]);
+
   return (
     <div className="contenedor">
       <header className="cabecera">
-        <NumeroParada />
+        <NumeroParada parada={parada} existeParada={existeParada}/>
         <div className="display">
           <div className="bus">
             <span className="linea">V16</span>
