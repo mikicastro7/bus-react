@@ -5,9 +5,8 @@ const Buses = (props) => {
 
   const [posicion, setposicion] = useState(0);
 
-  let i = 0;
-
   useEffect(() => {
+    let i = 0;
     setInterval(function () {
       i++;
       if (lineas) {
@@ -20,9 +19,6 @@ const Buses = (props) => {
       }
     }, 2000);
   }, [lineas]);
-
-
-
 
   return (
     <div className="display">
@@ -40,9 +36,6 @@ const Buses = (props) => {
         : <span className="linea">Cargando o no hay buses </span>}
     </div >
   );
-
-
-
 };
 
 export default Buses;
