@@ -2,9 +2,12 @@ import { useEffect, useState } from "react";
 import useFetch from "./hooks/useFetch";
 import NumeroParada from "./Components/NumeroParada";
 import Buses from "./Components/Buses";
+import SelectLinea from "./Components/SelectLinea";
+import TiempoLinea from "./Components/TiempoLinea";
 
 function App() {
   const [parada, setParada] = useState(2543);
+  const [tiempoLinea, setTiempoLine] = useState(null);
   const { datos: datosParada, pedirDatos: pedirParada } = useFetch();
   const { datos: datosLineas, pedirDatos: pedirLineas } = useFetch();
 
@@ -18,12 +21,22 @@ function App() {
     }
   }, [datosParada, parada, pedirLineas]);
 
+  const tiempoLineaHandler = (idLinea) => {
+    const datosFiltrados = datosLineas.data.ibus.filter(linea => linea.line === idLinea);
+    setTiempoLine({
+      linea : datosFiltrados[0].line,
+      minutos: datosFiltrados[0]["t-in-min"]
+    });
+
+  };
+
   return (
     <div className="contenedor">
       <header className="cabecera">
         <NumeroParada parada={datosParada} nParada={parada}/>
         <Buses lineas={datosLineas}/>
-        <h2>Tiempo para la línea 60: 2 minutos</h2>
+        {tiempoLinea ? <TiempoLinea linea={tiempoLinea}/> : ""}
+
       </header>
       <section className="forms">
         <form>
@@ -31,12 +44,7 @@ function App() {
           <input type="number" id="num-parada" />
           <button type="submit">Buscar</button>
         </form>
-        <form>
-          <label htmlFor="tiempo-linea">Tiempo para que llegue la línea: </label>
-          <select id="tiempo-linea">
-            <option value="">Elige línea</option>
-          </select>
-        </form>
+        <SelectLinea lineas={datosLineas} tiempoLineaHandler={tiempoLineaHandler} />
       </section>
     </div>
   );
