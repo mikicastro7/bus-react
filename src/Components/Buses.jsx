@@ -23,7 +23,7 @@ const Buses = (props) => {
   return (
     <div className="display">
       {lineas ?
-        lineas.data.ibus?.map((linea, i) => {
+        lineas.data.ibus?.map((linea) => {
 
           return (
             <div key={linea.line} className="bus" style={{ top: posicion }}>
