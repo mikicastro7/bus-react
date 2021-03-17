@@ -1,25 +1,37 @@
+import { useEffect, useState } from "react";
+import useFetch from "./hooks/useFetch";
+import NumeroParada from "./Components/NumeroParada";
+import Buses from "./Components/Buses";
+
 function App() {
+  const [parada, setParada] = useState(2543);
+  const [existeParada, setexisteParada] = useState(false);
+  const { datos: datosParada, cargando: cargandoParada } = useFetch(`https://api.tmb.cat/v1/transit/parades/${parada}?app_id=a372a6d9&app_key=de3506372e19c90a75a39c1fa2dc9fb7`);
+  const { datos: datosLineas, cargando: cargandoLinea } = useFetch(`https://api.tmb.cat/v1/ibus/stops/${parada}?app_id=a372a6d9&app_key=de3506372e19c90a75a39c1fa2dc9fb7`);
+  const [lineas, setLineas] = useState([]);
+
+  useEffect(() => {
+    if(!cargandoParada){
+      if(datosParada.numberReturned > 0){
+        setexisteParada(true);
+      } else {
+        setexisteParada(false);
+      }
+    }
+  },[parada, cargandoParada, datosParada]);
+
+  useEffect(() => {
+    if(!cargandoLinea && existeParada){
+      setLineas(datosLineas);
+    }
+  }, [cargandoLinea, datosLineas, existeParada]);
+
+
   return (
     <div className="contenedor">
       <header className="cabecera">
-        <h1>Parada nº 15</h1>
-        <div className="display">
-          <div className="bus">
-            <span className="linea">V16</span>
-            <span className="destino">Universitat</span>
-            <span className="tiempo">10min</span>
-          </div>
-          <div className="bus">
-            <span className="linea">H12</span>
-            <span className="destino">Pla de Palau</span>
-            <span className="tiempo">1min</span>
-          </div>
-          <div className="bus">
-            <span className="linea">32</span>
-            <span className="destino">Barceloneta</span>
-            <span className="tiempo">4min</span>
-          </div>
-        </div>
+        <NumeroParada parada={parada} existeParada={existeParada}/>
+        <Buses lineas={lineas}/>
         <h2>Tiempo para la línea 60: 2 minutos</h2>
       </header>
       <section className="forms">
