@@ -5,33 +5,24 @@ import Buses from "./Components/Buses";
 
 function App() {
   const [parada, setParada] = useState(2543);
-  const [existeParada, setexisteParada] = useState(false);
-  const { datos: datosParada, cargando: cargandoParada } = useFetch(`https://api.tmb.cat/v1/transit/parades/${parada}?app_id=a372a6d9&app_key=de3506372e19c90a75a39c1fa2dc9fb7`);
-  const { datos: datosLineas, cargando: cargandoLinea } = useFetch(`https://api.tmb.cat/v1/ibus/stops/${parada}?app_id=a372a6d9&app_key=de3506372e19c90a75a39c1fa2dc9fb7`);
-  const [lineas, setLineas] = useState([]);
+  const { datos: datosParada, pedirDatos: pedirParada } = useFetch();
+  const { datos: datosLineas, pedirDatos: pedirLineas } = useFetch();
 
   useEffect(() => {
-    if(!cargandoParada){
-      if(datosParada.numberReturned > 0){
-        setexisteParada(true);
-      } else {
-        setexisteParada(false);
-      }
-    }
-  },[parada, cargandoParada, datosParada]);
+    pedirParada(`https://api.tmb.cat/v1/transit/parades/${parada}?app_id=a372a6d9&app_key=de3506372e19c90a75a39c1fa2dc9fb7`);
+  }, [pedirParada, parada]);
 
   useEffect(() => {
-    if(!cargandoLinea && existeParada){
-      setLineas(datosLineas);
+    if(datosParada){
+      pedirLineas(`https://api.tmb.cat/v1/ibus/stops/${parada}?app_id=a372a6d9&app_key=de3506372e19c90a75a39c1fa2dc9fb7`);
     }
-  }, [cargandoLinea, datosLineas, existeParada]);
-
+  }, [datosParada, parada, pedirLineas]);
 
   return (
     <div className="contenedor">
       <header className="cabecera">
-        <NumeroParada parada={parada} existeParada={existeParada}/>
-        <Buses lineas={lineas}/>
+        <NumeroParada parada={datosParada} nParada={parada}/>
+        <Buses lineas={datosLineas}/>
         <h2>Tiempo para la línea 60: 2 minutos</h2>
       </header>
       <section className="forms">
