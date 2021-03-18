@@ -4,6 +4,7 @@ import NumeroParada from "./Components/NumeroParada";
 import Buses from "./Components/Buses";
 import SelectLinea from "./Components/SelectLinea";
 import TiempoLinea from "./Components/TiempoLinea";
+import DatosParadaContext from "./contexts/DatosParadaContext";
 
 function App() {
   const [parada, setParada] = useState(2543);
@@ -33,9 +34,11 @@ function App() {
   return (
     <div className="contenedor">
       <header className="cabecera">
-        <NumeroParada parada={datosParada} nParada={parada} />
-        <Buses lineas={datosLineas} />
-        {tiempoLinea ? <TiempoLinea linea={tiempoLinea} /> : ""}
+        <DatosParadaContext.Provider value={datosParada}>
+          <NumeroParada nParada={parada}/>
+        </DatosParadaContext.Provider>
+        <Buses lineas={datosLineas}/>
+        {tiempoLinea ? <TiempoLinea linea={tiempoLinea}/> : ""}
 
       </header>
       <section className="forms">
