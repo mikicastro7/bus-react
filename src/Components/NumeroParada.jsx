@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
+import DatosParadaContext from "../contexts/DatosParadaContext";
 
 export const NumeroParada = (props) => {
-  const { parada, nParada } = props;
+  const { nParada } = props;
+  const parada = useContext(DatosParadaContext);
+
   return (
     //existeParada ? <h1>Parada nº {parada}</h1> : <h1>La parada {parada} no existe</h1>
     parada ?
