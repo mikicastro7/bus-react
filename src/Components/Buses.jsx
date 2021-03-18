@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 
 const Buses = (props) => {
   const { lineas } = props;
@@ -7,17 +7,20 @@ const Buses = (props) => {
 
   useEffect(() => {
     let i = 0;
-    setInterval(function () {
-      i++;
-      if (lineas) {
-        if (i < lineas.data.ibus.length) {
-          setposicion(-30 * i);
-        } else {
-          setposicion(0);
-          i = 0;
+    if (lineas) {
+      const interval = setInterval(function () {
+        i++;
+        if (lineas) {
+          if (i < lineas.data.ibus.length) {
+            setposicion(-30 * i);
+          } else {
+            setposicion(0);
+            i = 0;
+          }
         }
-      }
-    }, 2000);
+      }, 2000);
+      return () => clearInterval(interval);
+    }
   }, [lineas]);
 
   return (
