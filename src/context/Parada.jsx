@@ -1,6 +1,6 @@
-import { createContext } from "react";
+import PropTypes from "prop-types";
 
-const ContextParada = createContext();
-ContextParada.displayName = "ContextParada";
-
-export default ContextParada;
+const Paradas = prop => {
+  Paradas.displayName = "BusesParadas";
+};
+export default Paradas;
