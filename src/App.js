@@ -17,7 +17,7 @@ function App() {
   }, [pedirParada, parada]);
 
   useEffect(() => {
-    if(datosParada){
+    if (datosParada) {
       pedirLineas(`https://api.tmb.cat/v1/ibus/stops/${parada}?app_id=a372a6d9&app_key=de3506372e19c90a75a39c1fa2dc9fb7`);
     }
   }, [datosParada, parada, pedirLineas]);
@@ -25,7 +25,7 @@ function App() {
   const tiempoLineaHandler = (idLinea) => {
     const datosFiltrados = datosLineas.data.ibus.filter(linea => linea.line === idLinea);
     setTiempoLine({
-      linea : datosFiltrados[0].line,
+      linea: datosFiltrados[0].line,
       minutos: datosFiltrados[0]["t-in-min"]
     });
 
