@@ -7,7 +7,7 @@ const useFetch = () => {
       .then(resp => resp.json())
       .then(datosAPI => setDatos(datosAPI));
   }, []);
-  return { datos, pedirDatos };
+  return { datos, pedirDatos, setDatos };
 };
 
 export default useFetch;

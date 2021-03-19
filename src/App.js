@@ -10,7 +10,7 @@ function App() {
   const [parada, setParada] = useState(2543);
   const [tiempoLinea, setTiempoLine] = useState(null);
   const { datos: datosParada, pedirDatos: pedirParada } = useFetch();
-  const { datos: datosLineas, pedirDatos: pedirLineas } = useFetch();
+  const { datos: datosLineas, pedirDatos: pedirLineas, setDatos: setDatosLineas } = useFetch();
 
   useEffect(() => {
     pedirParada(`https://api.tmb.cat/v1/transit/parades/${parada}?app_id=a372a6d9&app_key=de3506372e19c90a75a39c1fa2dc9fb7`);
@@ -20,6 +20,8 @@ function App() {
     if (datosParada) {
       if(datosParada.numberMatched > 0){
         pedirLineas(`https://api.tmb.cat/v1/ibus/stops/${parada}?app_id=a372a6d9&app_key=de3506372e19c90a75a39c1fa2dc9fb7`);
+      } else {
+        setDatosLineas(null);
       }
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
