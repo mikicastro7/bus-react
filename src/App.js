@@ -18,9 +18,12 @@ function App() {
 
   useEffect(() => {
     if (datosParada) {
-      pedirLineas(`https://api.tmb.cat/v1/ibus/stops/${parada}?app_id=a372a6d9&app_key=de3506372e19c90a75a39c1fa2dc9fb7`);
+      if(datosParada.numberMatched > 0){
+        pedirLineas(`https://api.tmb.cat/v1/ibus/stops/${parada}?app_id=a372a6d9&app_key=de3506372e19c90a75a39c1fa2dc9fb7`);
+      }
     }
-  }, [datosParada, parada, pedirLineas]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [datosParada, pedirLineas]);
 
   const tiempoLineaHandler = (idLinea) => {
     const datosFiltrados = datosLineas.data.ibus.filter(linea => linea.line === idLinea);
