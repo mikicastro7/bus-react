@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+
 
 const Buses = (props) => {
   const { lineas } = props;
@@ -29,7 +31,7 @@ const Buses = (props) => {
         lineas.data.ibus?.map((linea) => {
           return (
             <div key={linea.line} className="bus" style={{ top: posicion }}>
-              <span className="linea">{linea.line}</span>
+              <Link to={`/linea/${linea.line}`}><span className="linea">{linea.line}</span></Link>
               <span className="destino">{linea.destination}</span>
               <span className="tiempo">{linea["text-ca"]}</span>
             </div>
