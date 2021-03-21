@@ -10,10 +10,10 @@ function App() {
           <Route path="/parada" exact>
             <Parada></Parada>
           </Route>
-          <Route path="/linea/:id">
+          <Route path="/linea/:id" exact>
             <Linea />
           </Route>
-          <Route>
+          <Route path="/" exact>
             <Redirect to="/parada"/>
           </Route>
         </Switch>
