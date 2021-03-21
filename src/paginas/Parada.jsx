@@ -14,13 +14,13 @@ const Parada = () => {
   const { datos: datosLineas, pedirDatos: pedirLineas, setDatos: setDatosLineas } = useFetch();
 
   useEffect(() => {
-    pedirParada(`https://api.tmb.cat/v1/transit/parades/${parada}?app_id=a372a6d9&app_key=de3506372e19c90a75a39c1fa2dc9fb7`);
+    pedirParada(`${process.env.REACT_APP_API_URL_PARADA}${parada}?app_id=${process.env.REACT_APP_API_ID}&app_key=${process.env.REACT_APP_API_KEY}`);
   }, [pedirParada, parada]);
 
   useEffect(() => {
     if (datosParada) {
       if (datosParada.numberMatched > 0) {
-        pedirLineas(`https://api.tmb.cat/v1/ibus/stops/${parada}?app_id=a372a6d9&app_key=de3506372e19c90a75a39c1fa2dc9fb7`);
+        pedirLineas(`${process.env.REACT_APP_API_BUSES_PARADA}${parada}?app_id=${process.env.REACT_APP_API_ID}&app_key=${process.env.REACT_APP_API_KEY}`);
       } else {
         setDatosLineas(null);
       }
