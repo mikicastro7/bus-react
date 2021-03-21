@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
+import { Switch, Route, BrowserRouter as Router, Redirect } from "react-router-dom";
 import { useEffect, useState } from "react";
 import useFetch from "./hooks/useFetch";
 import NumeroParada from "./Components/NumeroParada";
@@ -37,24 +39,49 @@ function App() {
   };
 
   return (
-    <div className="contenedor">
-      <header className="cabecera">
-        <DatosParadaContext.Provider value={datosParada}>
-          <NumeroParada nParada={parada}/>
-        </DatosParadaContext.Provider>
-        <Buses lineas={datosLineas}/>
-        {tiempoLinea ? <TiempoLinea linea={tiempoLinea}/> : ""}
-
-      </header>
-      <section className="forms">
-        <form>
-          <label htmlFor="num-parada">Parada nº: </label>
-          <input type="number" id="num-parada" />
-          <button type="submit">Buscar</button>
-        </form>
-        <SelectLinea lineas={datosLineas} tiempoLineaHandler={tiempoLineaHandler} />
-      </section>
-    </div>
+    <Router>
+      <div className="contenedor">
+        <Switch>
+          <Route path="/parada" exact>
+            <header className="cabecera">
+              <DatosParadaContext.Provider value={datosParada}>
+                <NumeroParada nParada={parada}/>
+              </DatosParadaContext.Provider>
+              <Buses lineas={datosLineas}/>
+              {tiempoLinea ? <TiempoLinea linea={tiempoLinea}/> : ""}
+            </header>
+            <section className="forms">
+              <form>
+                <label htmlFor="num-parada">Parada nº: </label>
+                <input type="number" id="num-parada" />
+                <button type="submit">Buscar</button>
+              </form>
+              <SelectLinea lineas={datosLineas} tiempoLineaHandler={tiempoLineaHandler} />
+            </section>
+          </Route>
+          <Route path="/linea/:numParada">
+            <header className="cabecera">
+              <h2>Bus 109 - Hospital Clínic / Polígon Zona Franca</h2>
+              <h3>Polígon Zona Franca -{">"} Hospital Clínic</h3>
+              <a href="#">Volver a la portada</a>
+            </header>
+            <section>
+              <ul className="grafico-paradas">
+                <li className="parada">Parada nº X: Nombre parada (<a href="#">ver mapa</a>)</li>
+                <li className="parada">Parada nº 1741: Cotxeres TB Zona Franca (<a href="#">ver mapa</a>)</li>
+                <li className="parada">Parada nº 1045: Pg Zona Franca - Motors (<a href="#">ver mapa</a>)</li>
+                <li className="parada">Parada nº 1615: Carrer número 4 - Carrer D (<a href="#">ver mapa</a>)</li>
+                <li className="parada">Parada nº 1639: Carrer A- Comissaria Portuària (<a href="#">ver mapa</a>)</li>
+                <li className="parada">Parada nº 1643: Mercabarna - Mercat del Peix (<a href="#">ver mapa</a>)</li>
+              </ul>
+            </section>
+          </Route>
+          <Route>
+            <Redirect to="/parada"/>
+          </Route>
+        </Switch>
+      </div>
+    </Router>
   );
 }
 
