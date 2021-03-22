@@ -1,17 +1,22 @@
-import React from "react";
-import ContextParada from "../context/Parada";
+import { useContext, useState } from "react";
+import ContextBuscar from "../context/Buscar";
 
 export const NumeroParada = (props) => {
-  const { parada, nParada } = prop => ContextParada;
+  const { paradaBuscada } = useContext(ContextBuscar);
+  const [busqueda, setBusqueda] = useState("");
+
   const modificarParada = e => {
-    nParada(e.target.value);
+    setBusqueda(e.target.value);
   };
+
   const buscarParada = e => {
     e.PreventDefault();
+    paradaBuscada(busqueda);
   };
+
   return (
     <form onSubmit={buscarParada}>
-      <label htmlFor="num-parada">Parada nº: {parada}</label>
+      <label htmlFor="num-parada">{buscarParada ? "Parada nº" : ""} </label>
       <input type="number" id="num-parada" onChange={modificarParada} />
       <button type="submit">Buscar</button>
     </form>
