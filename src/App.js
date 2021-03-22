@@ -14,7 +14,7 @@ function App() {
             <Linea />
           </Route>
           <Route path="/" exact>
-            <Redirect to="/parada"/>
+            <Redirect to="/parada" />
           </Route>
         </Switch>
       </div>
